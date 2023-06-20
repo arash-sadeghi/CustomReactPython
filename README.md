@@ -1,8 +1,8 @@
 # RUN
 - 
 ```
-git clone 
-cd
+git clone git@github.com:arash-sadeghi/CustomReactPython.git
+cd CustomReactPython
 npm install
 npm start
 ```
