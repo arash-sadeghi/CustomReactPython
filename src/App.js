@@ -1,43 +1,26 @@
 import './App.css';
-import { useEffect } from 'react';
-
-// const runScript = async (code) => {
-//   const pyodide = await window.loadPyodide({
-//     indexURL : "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
-//   });
-
-//   return await pyodide.runPythonAsync(code);
-// }
+import { useEffect,useState } from 'react';
 
 function App() {
+  const [pyodide, setPyodide] = useState(null);
 
-  useEffect(()=> {
+  useEffect(
+    async ()=> {
     console.log("in useEffect")
-    const pyodide = window.loadPyodide({
+    await window.loadPyodide({
       indexURL : "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
-    });
+    }).then((pyodideInstance) => {setPyodide(pyodideInstance);});
   
   },[])
   
-
-  // async function main() {
-  //   await runScript(`
-  //       # Your Python code goes here
-  //       print('heee')
-  //   `);
-  // }
-
-
-  const buttonFunction = () =>{
-    console.log('will execute');
-
+  const buttonFunction = async () =>{
     const pyCode = `print('hi from python')`;
-
-    // main();
-    
-    // const pyodide = window.pyodide;
-
-    // pyodide.runPython(pyCode);
+    if (pyodide !== null){
+      await pyodide.runPythonAsync(pyCode);
+    }
+    else{
+      console.log("wait for pyodide load");
+    }
   }
 
   return (
